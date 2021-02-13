@@ -4,6 +4,7 @@ from framework.application import Application
 urls = {
     '/main/': views.index_page,
     '/about/': views.about_page,
+    '/contact/': views.contact_view,
 }
 
 
