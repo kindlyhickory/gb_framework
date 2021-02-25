@@ -1,13 +1,10 @@
 import views
-from framework.application import Application
+from framework.application import Application, DebugApplication, FakeApplication
 
 urls = {
     '/': views.main_view,
     '/create-course/': views.create_course,
     '/create-category/': views.create_category,
-    '/copy-course/': views.copy_course,
-    '/category-list/': views.category_list,
-
 }
 
 
@@ -20,3 +17,5 @@ front_controllers = [
 ]
 
 application = Application(urls, front_controllers)
+# debug_application = DebugApplication(urls,front_controllers)
+# fake_application = FakeApplication(urls, front_controllers)
