@@ -2,9 +2,12 @@ import views
 from framework.application import Application
 
 urls = {
-    '/main/': views.index_page,
-    '/about/': views.about_page,
-    '/contact/': views.contact_view,
+    '/': views.main_view,
+    '/create-course/': views.create_course,
+    '/create-category/': views.create_category,
+    '/copy-course/': views.copy_course,
+    '/category-list/': views.category_list,
+
 }
 
 

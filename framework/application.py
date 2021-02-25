@@ -6,8 +6,13 @@ class Application:
     def decode_value(val):
         val_b = bytes(val.replace('%', '=').replace("+", " "), 'UTF-8')
         val_decode_str = quopri.decodestring(val_b)
-        print(val_decode_str)
-        return val_decode_str.decode('utf-8')
+        return val_decode_str.decode('  UTF-8')
+
+    def add_route(self, url):
+        def inner(view):
+            self.urls[url] = view
+
+        return inner
 
     @staticmethod
     def parse_input_data(data: str):
@@ -23,8 +28,6 @@ class Application:
         result = {}
         if data:
             data_str = data.decode(encoding='utf-8')
-            data_str = self.decode_value(data_str)
-            print(data_str)
             result = self.parse_input_data(data_str)
         return result
 
