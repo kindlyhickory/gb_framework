@@ -18,8 +18,10 @@ class Logger(metaclass=SingletonByName):
 def debug(func):
     def wrapper(*args, **kwargs):
         start = time.time()
+        print(start)
         result = func(*args, **kwargs)
         end = time.time()
+        print(end)
         print('DEBUG:', func.__name__, end - start)
         return result
     return wrapper

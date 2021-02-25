@@ -44,7 +44,6 @@ class Application:
 
     def __call__(self, env, start_response):
         path = env['PATH_INFO']
-        print(env)
         if not path.endswith('/'):
             path = path + '/'
 
