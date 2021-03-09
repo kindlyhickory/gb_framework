@@ -2,6 +2,8 @@ from framework.CBV import CreateView, ListView
 from framework.application import Application, DebugApplication, FakeApplication
 from Logger import Logger
 from framework.templates import render
+from framework_orm.unitofwork import UnitOfWork
+from mappers import MapperRegistry
 from models import TrainingSite, EmailNotifier, SmsNotifier, BaseSerializer
 from Logger import debug
 
@@ -22,7 +24,8 @@ site = TrainingSite()
 email_notifier = EmailNotifier()
 sms_notifier = SmsNotifier()
 logger = Logger('main')
-
+UnitOfWork.new_current()
+UnitOfWork.get_current().set_mapper_registry(MapperRegistry)
 
 @debug
 def main_view(request):
@@ -82,6 +85,10 @@ class StudentListView(ListView):
     queryset = site.students
     template_name = 'student_list.html'
 
+    def get_queryset(self):
+        mapper = MapperRegistry.get_current_mapper('student')
+        return mapper.all()
+
 
 class StudentCreateView(CreateView):
     template_name = 'create_student.html'
@@ -91,6 +98,8 @@ class StudentCreateView(CreateView):
         name = Application.decode_value(name)
         new_obj = site.create_user('student', name)
         site.students.append(new_obj)
+        new_obj.mark_new()
+        UnitOfWork.get_current().commit()
 
 
 class AddStudentByCourseCreateView(CreateView):
